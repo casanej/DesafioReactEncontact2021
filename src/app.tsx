@@ -1,6 +1,9 @@
 import React, { ReactElement, useEffect, useState } from 'react';
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { ThemeProvider } from 'styled-components';
+import { AppStyled } from './app.style';
 import { GlobalStyle, PalletModel, PalletsType, theme } from './assets';
+import { HomePage } from './pages';
 
 export const App = (): ReactElement => {
     const [currentPallet, setCurrentPallet] = useState<PalletModel>(theme.pallet.dark);
@@ -15,13 +18,19 @@ export const App = (): ReactElement => {
     };
 
     useEffect(() => {
-        changeTheme('light');
+        changeTheme('dark');
     }, []);
 
     return (
         <ThemeProvider theme={{...theme, ...{ currentPallet }}} >
             <GlobalStyle theme={theme} />
-            <div><h1>PROJETO QUICK STARTER</h1></div>
+            <AppStyled>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/:filter?" component={HomePage} />
+                    </Switch>
+                </BrowserRouter>
+            </AppStyled>
         </ThemeProvider>
     );
 };
