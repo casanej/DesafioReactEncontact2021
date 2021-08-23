@@ -1,14 +1,25 @@
-import { makeAutoObservable } from "mobx";
-import { TodoItem, TodoList } from "../../models";
+import { makeAutoObservable, toJS } from "mobx";
+import { TodoAvailable, TodoItem, TodoList } from "../../models";
 
 export class TodosStore {
-    private todos: TodoList = [];
+    public todos: TodoList = [];
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    public getTodos = (): TodoList => this.todos
+    public getTodos = (filter?: TodoAvailable): TodoList => {
+        if (filter) {
+            switch (filter) {
+                case 'all': return this.todos;
+                case 'active': return this.getActiveTodos();
+                case 'completed': return this.getCompletedTodos();
+                default: return this.todos;
+            }
+        }
+
+        return this.todos;
+    }
 
     public addTodo = (todo: string): void => {
         this.todos.push({
@@ -19,7 +30,6 @@ export class TodosStore {
     }
 
     public removeTodo = (id: number): void => {
-        console.log('[ENTROU AQUI]', id);
         this.todos.splice(id, 1);
     }
 

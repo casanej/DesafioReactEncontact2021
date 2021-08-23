@@ -1,5 +1,8 @@
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect } from 'react'
 import { useState } from 'react';
+import { TodoItemSave } from '../../index.style';
 import { TodoItemEditInput, TodoItemEditStyled } from './index.style';
 
 interface Props {
@@ -18,9 +21,14 @@ export const TodoItemEdit = (props: Props): ReactElement => {
         const { code } = e;
 
         if (code === 'Enter' || code === 'NumpadEnter') {
-            props.onFinishEdit(value);
+            onFinishEdit();
             setValue('');
         }
+    }
+
+    const onFinishEdit = () => {
+        props.onFinishEdit(value);
+        setValue('');
     }
 
     return (
@@ -30,6 +38,10 @@ export const TodoItemEdit = (props: Props): ReactElement => {
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleEnter}
             />
+
+            <TodoItemSave onClick={onFinishEdit}>
+                <FontAwesomeIcon icon={faSave} size={'2x'} />
+            </TodoItemSave>
         </TodoItemEditStyled>
     );
 };

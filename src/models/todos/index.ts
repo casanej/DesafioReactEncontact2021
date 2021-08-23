@@ -4,4 +4,6 @@ export interface TodoItem {
     completed: boolean;
 }
 
+export type TodoAvailable = 'all' | 'active' | 'completed';
+
 export type TodoList = TodoItem[];

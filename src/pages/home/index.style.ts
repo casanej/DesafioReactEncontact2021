@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 
 export const HomePageStyled = styled.div`
     display: flex;
@@ -28,9 +29,12 @@ export const TodoListController = styled.div`
     border: 1px solid lightgrey;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    border-bottom: none;
     padding: 10px;
 `;
+
+export const TodoListToggler = styled.div`
+    cursor: pointer;
+`
 
 export const TodoListItems = styled.div`
     display: flex;
@@ -38,13 +42,44 @@ export const TodoListItems = styled.div`
     gap: 10px;
     border: 1px solid lightgrey;
     border-bottom: none;
-    padding: 10px;
+    border-top: none;
+    padding: 0 10px;
 `;
 
 export const TodoListManager = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
     border: 1px solid lightgrey;
-    border-top: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;
+`;
+
+export const TodoListFilterButton = styled(Link) <{ selected?: boolean }>`
+    text-decoration: none;
+    line-height: 2.25em;
+    padding: 0 10px;
+
+    ${props => props.selected && css`
+        border: 1px solid ${props.theme.colors.grayShades.gray500};
+        border-radius: 5px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    `}
+`;
+
+export const TodoListFilter = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const TextButton = styled.div`
+    cursor: pointer;
 `;

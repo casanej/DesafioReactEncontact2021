@@ -1,10 +1,10 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactElement, useEffect, useState } from 'react'
 import { InputCheckbox } from '../../../../components';
 import { TodoItem } from '../../../../models';
 import { TodoItemEdit } from './components';
-import { TodoItemContentStyled, TodoItemRemove, TodoItemText } from './index.style';
+import { TodoItemContentStyled, TodoItemRemove, TodoItemSave, TodoItemText } from './index.style';
 
 interface Props {
     todo: TodoItem;
@@ -37,7 +37,7 @@ export const TodoItemContent = (props: Props): ReactElement => {
     
     return (
         <TodoItemContentStyled>
-            <InputCheckbox onClick={(_, value) => handleMarkComplete(value)}/>
+            <InputCheckbox checked={props.todo.completed} onClick={(_, value) => handleMarkComplete(value)}/>
             {
                 isEditing
                 ? <TodoItemEdit
