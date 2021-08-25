@@ -21,6 +21,7 @@ export const InputTodo = (props: Props): ReactElement => {
         <InputTodoStyled>
             <InputAdd
                 value={value}
+                placeholder="O que precisa ser feito ?"
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleEnter}
             />

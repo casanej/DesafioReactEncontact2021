@@ -11,16 +11,11 @@ import { TodoAvailable, TodoList } from '../../models';
 
 const todoStore = new TodosStore();
 export const HomePage = observer(() => {
-    const [todoItems, setTodoItems] = useState<TodoList>([]);
     const queryParams = useParams<{ filter: TodoAvailable}>();
 
     useEffect(() => {
-        setTodoItems(todoStore.getTodos(queryParams.filter));
+        todoStore.getAllTodos();
     }, []);
-
-    useEffect(() => {
-        setTodoItems(todoStore.getTodos(queryParams.filter));
-    }, [queryParams.filter]);
 
     return (
         <HomePageStyled>

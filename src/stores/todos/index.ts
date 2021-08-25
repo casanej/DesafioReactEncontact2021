@@ -1,4 +1,6 @@
-import { makeAutoObservable, toJS } from "mobx";
+import axios from "axios";
+import { makeAutoObservable } from "mobx";
+import Swal from 'sweetalert2'
 import { TodoAvailable, TodoItem, TodoList } from "../../models";
 
 export class TodosStore {
@@ -21,11 +23,29 @@ export class TodosStore {
         return this.todos;
     }
 
-    public addTodo = (todo: string): void => {
+    public getAllTodos = async () => {
+        const apiTodos = await axios.get<Array<{
+            id: string;
+            title: string;
+            isDone: boolean;
+        }>>('http://my-json-server.typicode.com/EnkiGroup/DesafioReactEncontact2021/todos', { validateStatus: (status) => status < 500 });
+
+        if (apiTodos.status !== 200) {
+            return Swal.fire(
+                'Oops!',
+                'Não foi possível recuperar a lista de tarefas!',
+                'error'
+            )
+        }
+
+        apiTodos.data.forEach((todo) => this.addTodo(todo.title, todo.isDone));
+    }
+
+    public addTodo = (todo: string, isCompleted?: boolean): void => {
         this.todos.push({
             id: this.todos.length,
             text: todo,
-            completed: false
+            completed: isCompleted || false
         });
     }
 
