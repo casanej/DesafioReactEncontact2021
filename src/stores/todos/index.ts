@@ -50,15 +50,18 @@ export class TodosStore {
     }
 
     public removeTodo = (id: number): void => {
-        this.todos.splice(id, 1);
+        const todoIndex = this.todos.findIndex(todo => todo.id === id);
+        this.todos.splice(todoIndex, 1);
     }
 
     public toggleTodo = (id: number): void => {
-        this.todos[id].completed = !this.todos[id].completed;
+        const todoIndex = this.todos.findIndex(todo => todo.id === id);
+        this.todos[todoIndex].completed = !this.todos[todoIndex].completed;
     }
 
     public editTodo = (id: number, newTodo: TodoItem): void => {
-        this.todos[id] = newTodo;
+        const todoIndex = this.todos.findIndex(todo => todo.id === id);
+        this.todos[todoIndex] = newTodo;
     }
 
     public completeAll = (): void => {
