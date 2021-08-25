@@ -5,6 +5,7 @@ export const MenuTopHeaderStyled = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+    gap: 20px;
 
     padding: 10px;
 `;

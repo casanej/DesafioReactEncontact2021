@@ -1,0 +1,12 @@
+{
+    "home": {
+        "inputPlaceholder": "What needs to be done ?",
+        "itemLeft": "item left",
+        "itemsLeft": "items left",
+        "filterAll": "All",
+        "filterActive": "Active",
+        "filterCompleted": "Completed",
+        "clearCompleted": "Clean Completed",
+        "toDo": "TO DO's"
+    }
+}

@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' 
-import { TodosStore } from '../../stores';
+import { LanguageStore, TodosStore } from '../../stores';
 import { InputTodo, TodoItemContent } from './components';
 import { HomePageStyled, TextButton, TodoListContent, TodoListController, TodoListFilter, TodoListFilterButton, TodoListItems, TodoListManager, TodoListToggler } from './index.style';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { observer } from 'mobx-react-lite';
-import { TodoAvailable, TodoList } from '../../models';
+import { LanguageParams, TodoAvailable } from '../../models';
 
 const todoStore = new TodosStore();
+const languageStore = new LanguageStore();
+
 export const HomePage = observer(() => {
+    const language: LanguageParams['home'] = languageStore.getLanguage().home
     const queryParams = useParams<{ filter: TodoAvailable}>();
 
     useEffect(() => {
@@ -19,7 +22,7 @@ export const HomePage = observer(() => {
 
     return (
         <HomePageStyled>
-            <h1>TO DO's</h1>
+            <h1>{language.toDo}</h1>
             <TodoListContent>
                 <TodoListController>
                     <TodoListToggler onClick={todoStore.completeAll}>
@@ -41,14 +44,18 @@ export const HomePage = observer(() => {
                             />)) }
                         </TodoListItems>
                         <TodoListManager>
-                            <div>{todoStore.getActiveCount()} items left</div>
+                            {
+                                todoStore.getActiveCount() === 1
+                                ? <div>{todoStore.getActiveCount()} {language.itemLeft}</div>
+                                : <div>{todoStore.getActiveCount()} {language.itemsLeft}</div>
+                            }
                             <TodoListFilter>
-                                <TodoListFilterButton to="/all" selected={queryParams.filter === 'all' || !queryParams.filter} >All</TodoListFilterButton>
-                                <TodoListFilterButton to="/active" selected={queryParams.filter === 'active'} >Active</TodoListFilterButton>
-                                <TodoListFilterButton to="/completed" selected={queryParams.filter === 'completed'} >Completed</TodoListFilterButton>
+                                <TodoListFilterButton to="/all" selected={queryParams.filter === 'all' || !queryParams.filter} >{language.filterAll}</TodoListFilterButton>
+                                <TodoListFilterButton to="/active" selected={queryParams.filter === 'active'} >{language.filterActive}</TodoListFilterButton>
+                                <TodoListFilterButton to="/completed" selected={queryParams.filter === 'completed'} >{language.filterCompleted}</TodoListFilterButton>
                             </TodoListFilter>
                             <div>
-                                <TextButton onClick={todoStore.clearCompleted}>Clear completed</TextButton>
+                                <TextButton onClick={todoStore.clearCompleted}>{language.clearCompleted}</TextButton>
                             </div>
                         </TodoListManager>
                     </>
